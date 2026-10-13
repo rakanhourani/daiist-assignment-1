@@ -112,9 +112,9 @@
     "steps": 3000
   },
   "train_seconds": {
-    "scikit-learn": 0.5221012900001369,
-    "PyTorch by hand": 1.948691405000318,
-    "PyTorch standard": 2.707118193000497
+    "scikit-learn": 0.43763651500000833,
+    "PyTorch by hand": 1.5779450779999706,
+    "PyTorch standard": 2.4095710629999303
   },
   "agreement": [
     {
