@@ -7,12 +7,9 @@
 
 ## Dataset
 
-*What is it, where did you get it, what does one row represent, how many
-rows/columns, and why did you pick it.*
-
 The dataset is the official census of every commercial place in Madrid, which was published by the Ayuntamiento de Madrid. It’s updated monthly, and records each place’s activity (whether it’s a bar, restaurant, shop…), its current status (whether it’s open or closed) and its location and other features. I decided to keep the food and drink venues. 
 
-I got it from dates.madrid.es from the historical version of the census, and used three snapshots from April 2023, April 2024 and April 2025. One row represents a bar or restaurant that is open in April of a given year. Its features describe it on that date and its target says whether it was still the same business one year later. 
+I got it from datos.madrid.es from the historical version of the census, and used three snapshots from April 2023, April 2024 and April 2025. One row represents a bar or restaurant that is open in April of a given year. Its features describe it on that date and its target says whether it was still the same business one year later. 
 
 There is 33 622 rows and 17 columns. The row count is above the guide, but it is because both years were needed since the model was trained on 2023 venues and then tested on 2024. The raw files were large so I merged them into one single CSV file (madrid_bars_restaurants.csv) for the data that was needed. 
 
@@ -20,11 +17,6 @@ I picked this dataset because I am interested in the food business industry, and
 
 
 ## Business / real-life framing
-
-*The hypothetical scenario this model serves, and what that scenario implies
-for how you built the pipeline — target definition, whether a time-based
-split was necessary and why (or why not), which metric should drive the
-decision threshold and why.*
 
 The model was created for a brewery that lends free equipment (like taps and coolers) to bars and restaurants in exchange for their exclusivity, and incurs losses when a business they have lent to closes within the year. So this model, allows the brewery to classify the venues in madrid and the risk that they bring. This way, they can ask for a deposit from businesses that are more likely to close down within the next year and cut their losses. And if the venue does not close, the deposit was just a precautionary measure (at the risk of losing some customer loyalty).
 
@@ -35,11 +27,6 @@ I did a time based split because it was important since the brewery would use th
 I think that the metric that should decide the threshold is cost, because based on assumptions, a missed failure costs the brewery €1,500 in lost equipment, whereas a false alarm only costs €150, but with the risk of losing a venue to a rival. Accuracy is not reliable here because it is misleading, by looking great (93.5%) but it would never catch a failure before it happened. It also treats a missed failure and a false alarm as equally bad, when they are not. So the threshold is the one that minimizes total costs on the validation data which is at about 0.08. 
 
 ## Data preparation & feature engineering
-
-*What you engineered and why, and any data-quality decisions you made along
-the way — e.g. "segment X had defective data, so I excluded it and used a
-population-average default for scope Y at inference time; the impact of
-that choice is Z."*
 
 Data Preparation
 I started with the CSV which already had the institutional canteens removed from it (it was about 1 960 venues a year). For all the broken coordinates, venues that had coordinates as 0 or outside of Madrid, were replaced with their neighborhood’s average location. I did this because the ‘competitors within 250m’ feature is calculated from locations. The wrong coordinates would lead to false results and confuse the model. 
@@ -64,11 +51,6 @@ Features
 
 ## Modeling: three implementations, one model
 
-*Which model (linear or logistic regression) and why. A results table
-comparing scikit-learn, the manual PyTorch loop, and the standard
-torch.nn.Module/torch.optim workflow, on the same test set, against the
-naive baseline. Do the three agree? If not, why not?*
-
 I chose to use logistic regression because it gave each venue a probability of not surviving, which is useful for the brewery to be able to compare to the threshold. 
 
 | Model | Validation ROC-AUC | Validation PR-AUC | Test ROC-AUC | Test PR-AUC | Test log loss |
@@ -83,9 +65,6 @@ The three models are in agreement, with the same scores and training loss, with 
 
 ## Limitations & next steps
 
-*Real limitations you found, and concretely how you'd address each one with
-more time or data — not generic hedging.*
-
 - A limitation is that the costs are assumptions I have made, I would address this by finding the real figures for the equipment value and lost customers
 
 - 2024 had more failures than 2023 (9.6% vs 6.5%), meaning the threshold chosen on 2023 data was too cautious, and 'deposit from everyone' was slightly cheaper in 2024. The model would need to be retrained every year and the threshold rechecked on recent data
@@ -94,9 +73,6 @@ more time or data — not generic hedging.*
 
 
 ## Generative AI use disclosure
-
-*Per the syllabus AI Policy: what you used and how, or "no AI content used."*
-
 
 I used AI to help prepare the dataset and to help develop and understand the code for the training notebook, the three models and the Gradio dashboard
 
