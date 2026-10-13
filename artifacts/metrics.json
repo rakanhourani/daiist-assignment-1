@@ -112,9 +112,9 @@
     "steps": 3000
   },
   "train_seconds": {
-    "scikit-learn": 0.22865699300018605,
-    "PyTorch by hand": 1.6719892009998603,
-    "PyTorch standard": 2.574493959999927
+    "scikit-learn": 0.5221012900001369,
+    "PyTorch by hand": 1.948691405000318,
+    "PyTorch standard": 2.707118193000497
   },
   "agreement": [
     {
@@ -489,12 +489,12 @@
     "decision": [
       {
         "split": "validation",
-        "policy": "nobody on weekly terms",
+        "policy": "deposit from nobody",
         "cost_eur": 328500.0
       },
       {
         "split": "validation",
-        "policy": "everyone on weekly terms",
+        "policy": "deposit from everyone",
         "cost_eur": 470100.0
       },
       {
@@ -504,12 +504,12 @@
       },
       {
         "split": "test",
-        "policy": "nobody on weekly terms",
+        "policy": "deposit from nobody",
         "cost_eur": 2433000.0
       },
       {
         "split": "test",
-        "policy": "everyone on weekly terms",
+        "policy": "deposit from everyone",
         "cost_eur": 2285700.0
       },
       {
